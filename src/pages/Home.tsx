@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
 
 import { blogData } from "../data/blogData"

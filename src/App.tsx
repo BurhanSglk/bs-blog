@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import BlogDetail  from './pages/BlogDetail'
 import NotFound from './pages/NotFound'
-import Navbar from './components/Navbar'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'

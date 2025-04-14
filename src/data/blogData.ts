@@ -1,107 +1,150 @@
-// src/data/blogData.ts
-
-export interface BlogPost {
-  id: number
-  title: string
-  summary: string
-  slug: string
-  content: string
-}
-
-export const blogData: BlogPost[] = [
+export const blogData = [
   {
-    id: 1,
+    slug: 'react-performans',
     title: 'React ile Performans Optimizasyonu',
-    summary: 'React uygulamalarınızı daha hızlı hale getirmenin yollarını keşfedin.',
-    slug: 'react-performans-optimizasyonu',
+    author: 'Burhan Sağlık',
+    date: '14 Nisan 2025',
+    coverImage: '../images/optimization.jpg', // Görseli güncellediğimizden emin ol
     content: `
-React projelerinde performansı artırmak için birçok yöntem vardır. Bunlardan bazıları şunlardır:
+### 🚀 Giriş
 
-- **React.memo**: Pure component yaparak gereksiz renderları engeller.
-- **useMemo & useCallback**: Fonksiyonların ve hesaplamaların tekrar tekrar oluşturulmasını engeller.
-- **Code Splitting**: React.lazy ve Suspense ile sayfa bazlı yükleme.
-- **Sanal Listeleme**: Büyük listeleri sanallaştırmak için react-window veya react-virtualized kullanımı.
-- **State yönetimi optimizasyonu**: Gereksiz prop drilling'den kaçının, context ve redux gibi yapıları dikkatli kullanın.
+React uygulamalarında **performans**, kullanıcı deneyimi açısından kritik bir rol oynar. **Daha hızlı**, **daha verimli** ve **daha optimize edilmiş** React uygulamaları oluşturmak, hem kullanıcı memnuniyetini artırmak hem de SEO açısından büyük önem taşır.
 
-Performans izleme araçları olarak Chrome DevTools, React DevTools, Lighthouse kullanılabilir.
-    `,
-  },
-  {
-    id: 2,
-    title: 'TypeScript ile Daha Güvenli Kod',
-    summary: 'JavaScript’in ötesine geçerek daha güvenli ve sürdürülebilir kod yazın.',
-    slug: 'typescript-ile-guvenli-kod',
-    content: `
-TypeScript, JavaScript'e statik tip desteği getirerek büyük projelerde daha güvenli ve okunabilir kod yazmamıza olanak sağlar.
+Bu yazıda, React projelerinizde performansı nasıl optimize edebileceğinizi, hangi tekniklerin işinize yarayacağını ve kullanabileceğiniz araçları keşfedeceğiz.
 
-### Avantajları
-- **Tip kontrolü**: Derleme zamanında hataları yakalar.
-- **Gelişmiş IDE desteği**: Otomatik tamamlama, refactor kolaylığı.
-- **Kodun kendini belgelemesi**: Daha anlaşılır fonksiyon ve değişken tanımlamaları.
+---
 
-### Kullanım Örnekleri
-\`\`\`ts
-interface User {
-  name: string
-  age: number
-}
+### 📌 Temel Performans İyileştirme Teknikleri
 
-const greet = (user: User) => {
-  return \`Merhaba, \${user.name}\`
-}
+#### 1. Memoization (Yinelemeli Hesaplama Engelleme)
+
+React, bileşenlerini her render ettiğinde tüm alt bileşenlerini de yeniden render eder. Ancak bazı bileşenlerin sadece veri değiştiğinde yeniden render edilmesi gerekir. Bu durumda **memoization** (yinelemeli hesaplama engelleme) yardımcı olabilir. Örneğin, "React.memo" kullanarak:
+
+\`\`\`tsx
+const MemoizedComponent = React.memo(MyComponent)
 \`\`\`
 
-JavaScript dosyalarını \`.ts\` veya \`.tsx\` uzantısına çevirerek kolayca TypeScript'e geçiş yapılabilir.
-    `,
-  },
-  {
-    id: 3,
-    title: 'Tailwind CSS ile Modern Arayüzler',
-    summary: 'Tailwind CSS ile etkileyici ve responsive arayüzler nasıl tasarlanır?',
-    slug: 'tailwind-css-modern-arayuzler',
-    content: `
-Tailwind CSS, utility-first bir CSS framework'üdür. Hızlı prototipleme ve modern arayüz geliştirme sürecini oldukça hızlandırır.
+Memoization sayesinde yalnızca verilerin değiştiği bileşenler render edilir, böylece gereksiz render işlemleri engellenir.
 
-### Temel Özellikler
-- **Responsive tasarım**: md:, lg: gibi breakpoint'ler ile kolay responsive yapı.
-- **Dark mode desteği**: dark: prefix ile temaya özel stil tanımlamaları.
-- **Custom theme**: tailwind.config.js ile özel renk ve font tanımı.
+#### 2. useCallback ve useMemo
 
-### Örnek
-\`\`\`html
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Kaydet
-</button>
+"useCallback" ve "useMemo" hook'ları, fonksiyon referanslarının ve hesaplanan değerlerin yeniden hesaplanmasını engellemek için kullanılır. Özellikle yüksek performans gerektiren işlemler için idealdir.
+
+\`\`\`tsx
+const memoizedCallback = useCallback(() => {
+  console.log('Function Called');
+}, [dependencyArray]);
 \`\`\`
 
-Tailwind, projelerde CSS yazmadan modern UI'lar oluşturmak için oldukça kullanışlıdır.
-    `,
+\`\`\`tsx
+const computedValue = useMemo(() => expensiveCalculation(data), [data]);
+\`\`\`
+
+#### 3. Lazy Loading (Tembel Yükleme)
+
+**Lazy loading**, yalnızca ihtiyaç duyulan bileşenlerin yüklenmesini sağlar. Bu sayede başlangıçtaki yükleme süresi hızlanır.
+
+\`\`\`tsx
+const LazyComponent = React.lazy(() => import('./HeavyComponent'))
+\`\`\`
+
+Lazy loading sayesinde uygulama başlangıcında yalnızca gerekli bileşenler yüklenir. Diğer bileşenler kullanıcının etkileşimi ile yüklenir.
+
+#### 4. Virtualization (Sanallaştırma)
+
+Veri listeleme gibi büyük veri setlerini göstermek için **virtualization** kullanarak yalnızca görünür öğeleri render edebiliriz. Bu, bellek ve render sürelerini optimize eder.
+
+\`\`\`tsx
+import { List } from 'react-window';
+
+const MyList = () => (
+  <List
+    height={400}
+    itemCount={1000}
+    itemSize={35}
+    width={300}
+  >
+    {({ index, style }) => <div style={style}>{}</div>}
+  </List>
+);
+\`\`\`
+
+---
+
+### 📊 Performans Araçları
+
+Performans iyileştirmeleri yaparken kullanabileceğiniz bazı araçlar:
+
+- **React DevTools Profiler**: Uygulamanızın render süreçlerini analiz eder ve hangi bileşenlerin en fazla kaynak tükettiğini gösterir.
+- **Lighthouse**: Google'ın geliştirdiği açık kaynaklı bir araçtır. Web uygulamalarının performansını ve SEO uyumluluğunu test eder.
+- **Web Vitals**: Web Vitals, kullanıcı deneyimini ölçen önemli metrikleri takip etmenizi sağlar. Bu verilerle site performansınızı optimize edebilirsiniz.
+
+---
+
+### 🛠 Performans Test Etme
+
+Performans iyileştirmelerini yapmadan önce, mevcut uygulamanızın performansını test etmek oldukça önemlidir. **Lighthouse** veya **Web Vitals** gibi araçlarla uygulamanızın performansını test edebilir, ardından optimizasyonları gerçekleştirebilirsiniz.
+
+---
+
+### ✅ Sonuç
+
+Performans iyileştirmeleri sadece kullanıcı deneyimini geliştirmekle kalmaz, aynı zamanda SEO sıralamalarını ve uygulamanızın erişilebilirliğini de artırır. Küçük adımlar büyük farklar yaratabilir!
+
+Daha fazla performans önerisi ve teknik bilgi için [React Documentation](https://reactjs.org/docs/optimizing-performance.html) ve [Web Vitals](https://web.dev/vitals/) kaynaklarına göz atabilirsiniz.
+
+---
+
+### 📚 Kaynaklar
+
+- [React Memoization](https://reactjs.org/docs/react-api.html#reactmemo)
+- [React Performance Optimization](https://reactjs.org/docs/optimizing-performance.html)
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse)
+- [Web Vitals](https://web.dev/vitals/)
+    `
   },
   {
-    id: 4,
-    title: 'Frontend Dünyasında Yeni Trendler',
-    summary: 'Güncel frontend trendlerini ve yükselen teknolojileri inceleyin.',
-    slug: 'frontend-yeni-trendler',
+    slug: 'react-state-management',
+    title: 'React ile State Yönetimi',
+    author: 'Burhan Sağlık',
+    date: '20 Nisan 2025',
+    coverImage: '../images/state-management.jpg',
     content: `
-2025 yılına girerken frontend dünyasında öne çıkan trendler şunlar:
+### 🚀 Giriş
 
-### 1. Server Components (React)
-React 19 ile birlikte gelen Server Components mimarisi, performansı ve geliştirici deneyimini üst seviyeye taşıyor.
+React uygulamalarında **state yönetimi** önemli bir konudur. Bu yazıda, React'ta state yönetimini doğru bir şekilde nasıl uygulayabileceğinizi keşfedeceğiz.
 
-### 2. Islands Architecture
-Astro, Qwik gibi framework’lerle birlikte sadece ihtiyaç duyulan alanlar JavaScript ile interaktif hale getiriliyor.
+---
 
-### 3. Yeni Framework’ler
-- **Remix**: Nested routes ve loader yapısı ile veri yönetimi kolaylığı.
-- **SvelteKit**: Daha az JS, daha hızlı uygulamalar.
-- **Next.js 15**: App Router, Server Actions gibi yeni API'lerle güçlendi.
+### 📌 State Yönetim Teknikleri
 
-### 4. Tasarım Trendleri
-- Cam efekti (glassmorphism)
-- Dark mode zorunluluğu
-- Motion UI (Framer Motion ile animasyonlu arayüzler)
+#### 1. useState
 
-Gelişmeleri takip ederek projelerde rekabet gücü sağlanabilir.
-    `,
+React'ta en temel state yönetimi hook'u olan **useState**, bileşenler arasındaki veriyi yönetmek için kullanılır.
+
+\`\`\`tsx
+const [count, setCount] = useState(0);
+\`\`\`
+
+#### 2. useReducer
+
+useReducer, daha karmaşık state yönetimi için kullanılır. Bu hook, daha büyük uygulamalarda faydalıdır ve redux gibi dış kütüphanelere benzer.
+
+\`\`\`tsx
+const [state, dispatch] = useReducer(reducer, initialState);
+\`\`\`
+
+#### 3. Redux ve Context API
+
+Büyük uygulamalar için global state yönetimi gereklidir. Redux ve Context API, farklı state yönetimi yöntemleridir. Redux, daha fazla yapılandırma gerektirirken, Context API daha basit bir çözüm sunar.
+
+---
+
+### ✅ Sonuç
+
+State yönetimini doğru kullanmak, uygulamanızın performansını ve bakımını kolaylaştırır. Uygulamanızın büyüklüğüne göre uygun çözümü seçmek önemlidir.
+
+---
+    `
   },
 ]
