@@ -6,6 +6,7 @@ import { blogData } from "../data/blogData"
 import { BlogCard } from "../components/BlogCard"
 
 import Navbar from "../components/Navbar"
+import Projects from '../components/Projects'
 
 import { useLocation } from 'react-router-dom'
 
@@ -77,15 +78,14 @@ const Home = () => {
   </a>
 </div>
 
-{/* Scroll Down */}
-<div className="absolute bottom-10 z-10 flex flex-col items-center animate-bounce">
-  <a
-    href="#blogs"
-    className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
-  >
-    ↓ Bloglara Göz At
-  </a>
-</div>
+      <div className="absolute bottom-10 z-10 flex flex-col items-center animate-bounce">
+        <a
+          href="#blogs"
+          className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
+        >
+          ↓ Bloglara Göz At
+        </a>
+      </div>
       </section>
 
       <section data-aos="fade-down" id="blogs" className="py-16 px-6 bg-gray-50 dark:bg-gray-900">
@@ -96,6 +96,8 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      <Projects/>
 
       {/* About Me Section */}
       <section data-aos="fade-down" id="about" className="py-20 px-6 max-w-4xl mx-auto text-center">
