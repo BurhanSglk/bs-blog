@@ -7,10 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CodeBlock from '../components/CodeBlock'
 
-import Logo from '../images/optimization.jpg'
 
-import remarkSlug from 'remark-slug'
-import remarkAutolinkHeadings from 'remark-autolink-headings'
 import { useTableOfContents } from '../hooks/useTableOfContents'
 
 const BlogDetail = () => {
@@ -36,7 +33,7 @@ const BlogDetail = () => {
   
           <article className="prose prose-custom dark:prose-invert max-w-none space-y-6">
   <ReactMarkdown
-    remarkPlugins={[remarkGfm, remarkSlug, remarkAutolinkHeadings]}
+    remarkPlugins={[remarkGfm]}
     components={{
       code({ node, className, children, ...props }) {
         const match = /language-(\w+)/.exec(className || '')

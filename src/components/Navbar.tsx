@@ -2,7 +2,12 @@ import { Link, NavLink } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { Menu, X, Sun, Moon } from "lucide-react"
 
-const Navbar = () => {
+type NavbarProps = {
+  setPath: (path: string) => void
+  path: string
+}
+
+const Navbar = ({setPath , path} : NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
 
@@ -21,9 +26,10 @@ const Navbar = () => {
   }, [])
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Blogs", path: "/blogs" },
-    { name: "About Me", path: "/about" },
+    { name: "Home", path: "home" },
+    { name: "Blogs", path: "blogs" },
+    { name: "About Me", path: "about" },
+    { name: "Contact", path: "contact" },
   ]
 
   return (
@@ -36,21 +42,20 @@ const Navbar = () => {
         {/* Menü - Masaüstü */}
         <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <NavLink
+            <a
               key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `text-sm font-medium transition ${
-                  isActive
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400"
-                }`
-              }
+              onClick={() => setPath(item.path)}
+              className={`cursor-pointer transition-colors duration-200 ${
+                path === item.path
+                  ? 'text-blue-600 font-semibold underline underline-offset-4'
+                  : 'text-gray-600 hover:text-blue-500'
+              }`}
             >
               {item.name}
-            </NavLink>
+            </a>
           ))}
         </div>
+
 
         {/* Dark Mode + Mobil Menü Butonu */}
         <div className="flex items-center gap-4">

@@ -1,5 +1,6 @@
 export const blogData = [
   {
+    id:1,
     slug: 'react-performans',
     title: 'React ile Performans Optimizasyonu',
     author: 'Burhan Sağlık',
@@ -104,6 +105,7 @@ Daha fazla performans önerisi ve teknik bilgi için [React Documentation](https
     `
   },
   {
+    id:2,
     slug: 'react-state-management',
     title: 'React ile State Yönetimi',
     author: 'Burhan Sağlık',

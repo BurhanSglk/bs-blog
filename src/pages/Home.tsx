@@ -1,15 +1,34 @@
+import React,{useEffect, useState} from 'react'
+
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa'
 
 import { blogData } from "../data/blogData"
-import { BlogCard } from "../components/BlogCaRD"
+import { BlogCard } from "../components/BlogCard"
 
 import Navbar from "../components/Navbar"
 
+import { useLocation } from 'react-router-dom'
+
 const Home = () => {
+
+  const location = useLocation();
+
+  const [path, setPath] = useState("")
+
+  useEffect(() => {
+    if (path) {
+      const section = document.getElementById(path);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [path]);
+
   return (
   <main className="bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100">
-      <Navbar/>
+        <Navbar setPath={setPath} path={path}/>
       <section
+      id='home'
   data-aos="fade-down"
   className="relative min-h-[90vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-gradient-to-br from-[#fdfbfb] to-[#ebedee] dark:from-gray-900 dark:to-gray-800"
 >
