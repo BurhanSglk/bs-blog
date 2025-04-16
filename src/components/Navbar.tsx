@@ -9,7 +9,7 @@ type NavbarProps = {
 
 const Navbar = ({setPath , path} : NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(true)
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -28,6 +28,7 @@ const Navbar = ({setPath , path} : NavbarProps) => {
   const navItems = [
     { name: "Home", path: "home" },
     { name: "Blogs", path: "blogs" },
+    { name: "Projects", path: "projects" },
     { name: "About Me", path: "about" },
     { name: "Contact", path: "contact" },
   ]

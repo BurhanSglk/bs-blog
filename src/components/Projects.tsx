@@ -12,7 +12,7 @@ const projects = [
     title: 'Not App',
     description: 'Not alıp işlerinizi takip edebileceğiniz bir uygulama.',
     tech: ['React', 'TypeScript', 'Tailwind'],
-    github: 'https://note.burhansaglik.site/',
+    github: 'https://github.com/BurhanSglk/NoteApp',
     demo: 'https://note.burhansaglik.site/',
   },
   {
